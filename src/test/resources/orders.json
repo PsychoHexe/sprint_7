@@ -1,0 +1,66 @@
+[
+    {
+        "firstName": "Мастер",
+        "lastName": "Маргарита",
+        "address": "ул.Бронная, 4",
+        "metroStation": "Сокол",
+        "phone": "89998887766",
+        "rentTime": 7,
+        "deliveryDate": "25.07.2025",
+        "comment": "Оно живо",
+        "color": [
+            "BLACK"
+        ]
+    },
+    {
+        "firstName": "Мастер",
+        "lastName": "Маргарита",
+        "address": "ул.Бронная, 4",
+        "metroStation": "Сокол",
+        "phone": "89998887766",
+        "rentTime": 7,
+        "deliveryDate": "25.07.2025",
+        "comment": "Оно живо",
+        "color": [
+            "BLACK"
+        ]
+    },
+    {
+        "firstName": "Мастер",
+        "lastName": "Маргарита",
+        "address": "ул.Бронная, 4",
+        "metroStation": "Чистые пруды",
+        "phone": "89998887766",
+        "rentTime": 7,
+        "deliveryDate": "10.07.2025",
+        "comment": "Починяю примус",
+        "color": [
+            "GRAY"
+        ]
+    },
+    {
+        "firstName": "Мастер",
+        "lastName": "Маргарита",
+        "address": "ул.Бронная, 4",
+        "metroStation": "Деловой центр",
+        "phone": "89998887766",
+        "rentTime": 7,
+        "deliveryDate": "10.07.2025",
+        "comment": "Аннушка уже разлила масло",
+        "color": [
+            "GRAY",
+            "BLACK"
+        ]
+    },
+    {
+        "firstName": "Мастер",
+        "lastName": "Маргарита",
+        "address": "ул.Бронная, 4",
+        "metroStation": "Сокол",
+        "phone": "89998887766",
+        "rentTime": 7,
+        "deliveryDate": "10.07.2025",
+        "comment": "Починяю примус",
+        "color": []
+    }
+]
