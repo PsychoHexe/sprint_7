@@ -1,0 +1,32 @@
+[
+    {
+        "login": "Wasd",
+        "password": "1113",
+        "firstName": "Margo"
+    },
+    {
+        "login": "Wasd",
+        "password": "1113",
+        "firstName": "Margo"
+    },
+    {
+        "login": "",
+        "password": "1113",
+        "firstName": "Margo"
+    },
+    {
+        "login": "Wasd",
+        "password": "",
+        "firstName": "Margo"
+    },
+    {
+        "login": "Wasd",
+        "password": "1113",
+        "firstName": ""
+    },
+    {
+        "login": "Wasd",
+        "password": "1113",
+        "firstName": "MargoN"
+    }
+]
