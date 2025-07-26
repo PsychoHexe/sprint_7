@@ -3,14 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
  */
 
-package com.sprint_7;
+package com.sprint;
 
 import org.hamcrest.Matchers;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ErrorCollector;
 
-import com.sprint_7.data.CourierData;
+import com.sprint.data.CourierData;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
@@ -18,9 +16,6 @@ import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 
 public class CourierCreateTest extends CourierBaseTest {
-
-    @Rule
-    public final ErrorCollector errorCollector = new ErrorCollector();
     
     @Step("Проверка пользователь создан")
     public void stepCheckUserCreate(Response response) {
@@ -45,8 +40,12 @@ public class CourierCreateTest extends CourierBaseTest {
     @DisplayName("Создание курьера")
     @Description("ручка для создания курьера/api/v1/courier")
     public void newCourierCreatePositiveTest() {
-        CourierCreate courierCreate = CourierData.POSITIV_CREATE_LIST.get(0);
-        Response response = courierCreate.createCourier();
+        CourierCreateModel courierCreate = CourierData.POSITIV_CREATE_LIST.get(0);
+
+        courierCreate.getLogin();
+
+        CourierCreateApi api = new CourierCreateApi(courierCreate);
+        Response response = api.createCourier();
         stepCheckUserCreate(response);
 
         deleteCourierList.add(courierCreate);
@@ -57,12 +56,14 @@ public class CourierCreateTest extends CourierBaseTest {
     @Description("ручка для создания курьера/api/v1/courier с негативными данными")
     public void newCourierCreateNegativeTest() {
         
-        for (CourierCreate courier : CourierData.NEGATIVE_CREATE_LIST) {
+        CourierCreateApi api = new CourierCreateApi();        
 
-            Response respons = courier.createCourier();
+        for (CourierCreateModel courier : CourierData.NEGATIVE_CREATE_LIST) {
+            api.setModel(courier);
+            Response respons = api.createCourier();
             // Чтобы очистить всех пользователей добавляем его в список на удаления
             if (respons.statusCode() == 201) {
-                int courierId = courier.getCourierId();
+                int courierId = api.getCourierId();
                 deleteCourierList.add(courier);
             }
 
@@ -77,13 +78,15 @@ public class CourierCreateTest extends CourierBaseTest {
     @Description("Создание с существующим логином ручка для создания курьера/api/v1/courier")
     public void newCourierCreateSameTest() {
 
-        CourierCreate courierCreate1 = CourierData.POSITIV_CREATE_LIST.get(0);
-        Response response1 = courierCreate1.createCourier();
+        CourierCreateModel courierCreate1 = CourierData.POSITIV_CREATE_LIST.get(0);
+        CourierCreateApi api1 = new CourierCreateApi(courierCreate1);
+        Response response1 = api1.createCourier();
 
         deleteCourierList.add(courierCreate1);
         
-        CourierCreate courierCreate2 = CourierData.POSITIV_CREATE_LIST.get(1);
-        Response response2 = courierCreate2.createCourier();
+        CourierCreateModel courierCreate2 = CourierData.POSITIV_CREATE_LIST.get(1);
+        CourierCreateApi api2 = new CourierCreateApi(courierCreate2);
+        Response response2 = api2.createCourier();
         
         stepCheckDubleSame(response2);
 

@@ -1,4 +1,4 @@
-package com.sprint_7;
+package com.sprint;
 
 import io.qameta.allure.Step;
 import static io.restassured.RestAssured.given;

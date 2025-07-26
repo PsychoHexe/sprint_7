@@ -1,4 +1,4 @@
-package com.sprint_7;
+package com.sprint;
 
 import java.io.File;
 
@@ -11,6 +11,7 @@ import org.junit.runners.Parameterized;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.sprint.OrderCreate;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;

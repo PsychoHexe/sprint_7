@@ -1,4 +1,4 @@
-package com.sprint_7;
+package com.sprint;
 
 public class ListOfConstants {
 
