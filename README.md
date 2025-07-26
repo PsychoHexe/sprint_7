@@ -20,3 +20,7 @@ mvn clean test
 ```
 mvn allure:serve
 ```
+
+```
+allure generate ./target/allure-results -o ./target/allure-report --clean
+```

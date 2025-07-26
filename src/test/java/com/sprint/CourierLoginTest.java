@@ -21,7 +21,7 @@ public class CourierLoginTest extends CourierBaseTest {
     }
 
     @Test
-    @DisplayName("Логин курьера")
+    @DisplayName("Логин курьера (позитивный)")
     @Description("Курьер может залогиниться ручка для логина курьера/api/v1/courier/login")
     public void newCourierLoginPositiveTest() {
         CourierCreateApi api = new CourierCreateApi(CourierData.POSITIV_CREATE_LIST.get(0));
@@ -37,40 +37,59 @@ public class CourierLoginTest extends CourierBaseTest {
     
 
     @Test
-    @DisplayName("Логин курьера")
+    @DisplayName("Логин курьера (негативный)")
     @Description("Курьер не может залогиниться, если данные не верны ручка для логина курьера/api/v1/courier/login")
     public void newCourierLoginNegativeTest() {
-        // Берем негативные случаи из списка
+
         CourierCreateModel courierCreate = CourierData.POSITIV_CREATE_LIST.get(0);
         CourierCreateApi api = new CourierCreateApi(courierCreate);
 
         Response response = api.createCourier();
-        deleteCourierList.add(courierCreate);        
-        
+
+        deleteCourierList.add(courierCreate);
+
+        // Берем негативные случаи из списка
         for (CourierCreateModel courier : CourierData.NEGATIVE_LOGIN_LIST) {
-            
-            api.setModel(courier);
-            response =  api.loginCourier();
+            try {
+                api.setModel(courier);
+                response = api.loginCourier();
 
-            int statusCode = response.then().extract().statusCode();
+                int statusCode = response.then().extract().statusCode();
 
-            switch (statusCode) {
-                case 400:
-                    response.then().assertThat().body(Matchers.containsString("Недостаточно данных для входа"))
-                            .and()
-                            .statusCode(400);
-                    break;
-                case 404:
-                    response.then().assertThat().body(Matchers.containsString("Учетная запись не найдена"))
-                            .and()
-                            .statusCode(404);
-                    break;
-                default:
-                    assertTrue("", false);
-                    break;
+                switch (statusCode) {
+                    case 400:
+                        checkLoginNotEnter(response);
+                        break;
+                    case 404:
+                        checkLoginNotFind(response);
+                        break;
+                    default:
+                        String error = courier.getLogin() != courierCreate.getLogin() && !courier.getLogin().isEmpty()
+                                ? "Возможно курьер уже был создан"
+                                : "Вход с не валидными данными";
+                        assertTrue(error, false);
+                        break;
+                }
+            } catch (AssertionError e) {
+                courierDataAssert(courier, " вход с не валидными данными");
+                errorCollector.addError(e);
             }
 
         }
+    }
+
+    @Step("Учетная запись не найдена")
+    private void checkLoginNotFind(Response response) {
+        response.then().assertThat().body(Matchers.containsString("Учетная запись не найдена"))
+                .and()
+                .statusCode(404);
+    }
+    
+    @Step("Не достаточно данных для входа")
+    private void checkLoginNotEnter(Response response) {
+        response.then().assertThat().body(Matchers.containsString("Недостаточно данных для входа"))
+                .and()
+                .statusCode(400);
     }
 
 }

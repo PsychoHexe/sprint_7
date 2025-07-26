@@ -14,7 +14,7 @@ public class CourierData {
         public static final List<CourierCreateModel> NEGATIVE_LOGIN_LIST = Arrays.asList(
                         new CourierCreateModel("", "1113", ""),
                         new CourierCreateModel("Wasd", "", ""),
-                        new CourierCreateModel("Wasda", "1113", ""),
+                        new CourierCreateModel("Wasdaasd", "1113", ""),
                         new CourierCreateModel("Wasd", "1112", ""));
 
         public static final List<CourierCreateModel> POSITIV_CREATE_LIST = Arrays.asList(

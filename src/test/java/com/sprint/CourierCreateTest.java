@@ -16,7 +16,7 @@ import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 
 public class CourierCreateTest extends CourierBaseTest {
-    
+        
     @Step("Проверка пользователь создан")
     public void stepCheckUserCreate(Response response) {
         response.then().assertThat().statusCode(201).and().extract().path("ok");
@@ -37,7 +37,7 @@ public class CourierCreateTest extends CourierBaseTest {
     }
 
     @Test
-    @DisplayName("Создание курьера")
+    @DisplayName("Создание курьера (позитивный тест)")
     @Description("ручка для создания курьера/api/v1/courier")
     public void newCourierCreatePositiveTest() {
         CourierCreateModel courierCreate = CourierData.POSITIV_CREATE_LIST.get(0);
@@ -52,12 +52,12 @@ public class CourierCreateTest extends CourierBaseTest {
     }
 
     @Test
-    @DisplayName("Создание курьера")
+    @DisplayName("Создание курьера (негативный тест)")
     @Description("ручка для создания курьера/api/v1/courier с негативными данными")
     public void newCourierCreateNegativeTest() {
         
         CourierCreateApi api = new CourierCreateApi();        
-
+        
         for (CourierCreateModel courier : CourierData.NEGATIVE_CREATE_LIST) {
             api.setModel(courier);
             Response respons = api.createCourier();
@@ -67,14 +67,19 @@ public class CourierCreateTest extends CourierBaseTest {
                 deleteCourierList.add(courier);
             }
 
-            checkCreateNegative(respons);
+            try {
+                checkCreateNegative(respons);
+            } catch (AssertionError e) {
+                errorCollector.addError(e);
+                courierDataAssert(courier, " создан с не валидными данными");
+            }
         }
     }
 
     
 
     @Test
-    @DisplayName("Создание курьера")
+    @DisplayName("Создание курьера (повторно не создается)")
     @Description("Создание с существующим логином ручка для создания курьера/api/v1/courier")
     public void newCourierCreateSameTest() {
 

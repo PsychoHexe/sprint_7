@@ -1,10 +1,6 @@
 package com.sprint;
 
-import io.qameta.allure.Step;
-import static io.restassured.RestAssured.given;
-import io.restassured.response.Response;
-
-public class OrderCreate {
+public class OrderCreateModel {
 
     private String firstName; // Имя
     private String lastName; // Фамилия
@@ -15,9 +11,10 @@ public class OrderCreate {
     private String Date; // Дата доставки
     private String comment; // Комментарий
     private String[] color; // Цвет
+    private int track;
 
     // Конструктор со всеми полями
-    public OrderCreate(String firstName, String lastName, String address, String metroStation,
+    public OrderCreateModel(String firstName, String lastName, String address, String metroStation,
             String phone, int rentTime, String deliveryDate, String comment, String[] color) {
 
         this.firstName = firstName;
@@ -32,7 +29,7 @@ public class OrderCreate {
     }
 
     // Пустой конструктор
-    public OrderCreate() {
+    public OrderCreateModel() {
     }
 
     // Геттеры для полей
@@ -109,13 +106,11 @@ public class OrderCreate {
         this.color = color;
     }
 
-    @Step("Отправляем запрос на создание заказа API")
-    public Response createOrder() {
-        return given()
-                .header("Content-type", "application/json")
-                .body(this)
-                .when()
-                .post(ListOfConstants.ORDERS);
+    public int getTrack() {
+        return track;
     }
 
+    public void setTrack(int track) {
+        this.track = track;
+    }
 }
