@@ -8,8 +8,9 @@ import com.sprint.CourierCreateModel;
 public class CourierData {
 
         public static final List<CourierCreateModel> NEGATIVE_CREATE_LIST = Arrays.asList(
-                        new CourierCreateModel("", "1113", "Margo"),
-                        new CourierCreateModel("Wasd", "", "Margo"));
+                new CourierCreateModel("", "1113", "Margo"),
+                new CourierCreateModel("Wasd", "", "Margo"),
+                new CourierCreateModel("1", "1113", "Margo"));
 
         public static final List<CourierCreateModel> NEGATIVE_LOGIN_LIST = Arrays.asList(
                         new CourierCreateModel("", "1113", ""),

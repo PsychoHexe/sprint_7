@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.hamcrest.Matchers;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
@@ -53,10 +54,7 @@ public class CreatingAnOrderTest extends BaseTest{
     @DisplayName("Создание заказа")
     @Description("Создание заказа ручка для создания /api/v1/orders")
     public void newOrderCreateTest(){        
-        this.apiOrder = new OrderCreateApi();
-        this.apiOrder.setOrder(this.testOrder);
-
-        Response response = apiOrder.createOrder();
+        Response response = apiOrder.createOrder(testOrder);
 
         int trackId = trackCheckOrderCreate(response);
 
@@ -67,20 +65,24 @@ public class CreatingAnOrderTest extends BaseTest{
 
     @Step("Проверка ответа, что заказ был создан и получение трека")
     public int trackCheckOrderCreate(Response response) {
-        int track = response.then().assertThat().body(Matchers.containsString("track"))
-                .and()
-                .statusCode(201).extract().path("track");
+        int track = response.then().assertThat()
+                .statusCode(201)
+                .and().body(Matchers.containsString("track")).extract().path("track");
         return track;
     }
 
+    @Before
+    public void initApi(){
+        apiOrder = new OrderCreateApi();
+    }
+    
     @After
     public void deleteOrder() {       
-        apiOrder = new OrderCreateApi();
+        
         
         if (deleteOrderList != null && !deleteOrderList.isEmpty())
         for (OrderCreateModel order : deleteOrderList) {            
-            apiOrder.setOrder(order);
-            apiOrder.deleteOrder();
+            apiOrder.deleteOrder(order);
         }
         deleteOrderList.clear();
     }

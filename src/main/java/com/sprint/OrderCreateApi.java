@@ -5,19 +5,9 @@ import static io.restassured.RestAssured.given;
 import io.restassured.response.Response;
 
 public class OrderCreateApi {
-    private OrderCreateModel order;
-    public int id;
-
-    public OrderCreateModel getOrder() {
-        return order;
-    }
-
-    public void setOrder(OrderCreateModel order) {
-        this.order = order;
-    }
 
     @Step("Отправляем запрос на создание заказа API")
-    public Response createOrder() {
+    public Response createOrder(OrderCreateModel order) {
         return given()
                 .header("Content-type", "application/json")
                 .body(order)
@@ -26,7 +16,7 @@ public class OrderCreateApi {
     }
 
     @Step("Отменяем заказ")
-    public Response deleteOrder() {
+    public Response deleteOrder(OrderCreateModel order) {
         return given()
                 .header("Content-type", "application/json")
                 .body("{\"track\": " + order.getTrack() + "}")
@@ -43,7 +33,7 @@ public class OrderCreateApi {
     }
 
     @Step("Получить список заказа c указанием id курьера")
-    public Response getOrderListId() {
+    public Response getOrderListId(int id) {
         return given()
                 .header("Content-type", "application/json")
                 .when()
