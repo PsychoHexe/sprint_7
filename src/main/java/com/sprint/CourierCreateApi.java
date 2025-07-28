@@ -6,8 +6,7 @@ import io.restassured.response.Response;
 
 public class CourierCreateApi {
 
-    CourierCreateApi(){}
-
+    
     // 1. Создание нового курьера
     @Step("Отправляем запрос на создание курьера API")
     public Response createCourier( CourierCreateModel model ) {

@@ -8,7 +8,6 @@ package com.sprint;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
-import com.google.gson.Gson;
 import com.sprint.data.CourierData;
 
 import io.qameta.allure.Description;
@@ -41,6 +40,7 @@ public class CourierCreateTest extends CourierBaseTest {
     @DisplayName("Создание курьера (позитивный тест)")
     @Description("ручка для создания курьера/api/v1/courier")
     public void newCourierCreatePositiveTest() {
+
         CourierCreateModel courierCreate = CourierData.POSITIV_CREATE_LIST.get(0);
 
         courierCreate.getLogin();
@@ -54,28 +54,47 @@ public class CourierCreateTest extends CourierBaseTest {
 
     @Test
     @DisplayName("Создание курьера (негативный тест)")
-    @Description("ручка для создания курьера/api/v1/courier с негативными данными")
-    public void newCourierCreateNegativeTest() {
-        
-        Gson gson = new Gson();
-        for (CourierCreateModel courier : CourierData.NEGATIVE_CREATE_LIST) {
+    @Description("ручка для создания курьера/api/v1/courier с отсутсвующим логином")
+    public void newCourierCreateWithoutLoginNegativeTest() {
 
-            Response respons = api.createCourier(courier);
-            
-            // Чтобы очистить всех пользователей добавляем его в список на удаления
-            if (respons.statusCode() == 201) {
-                api.getCourierId(courier);
-                deleteCourierList.add(courier);
-            }
-            try {
-                checkCreateNegative(respons);
-            } catch (AssertionError e) {
-                System.err.println(gson.toJson(courier));
-                errorCollector.addError(e);
-                courierDataAssert(courier, " создан с не валидными данными");
-            }
-        }
+        CourierCreateModel courierCreate = CourierData.NEGATIVE_CREATE_LIST.get(0);
+        Response response = api.createCourier(courierCreate);
+        checkCreateNegative(response);
+
     }
+
+    @Test
+    @DisplayName("Создание курьера (негативный тест)")
+    @Description("ручка для создания курьера/api/v1/courier с отсутсвующим паролем")
+    public void newCourierCreateWithoutPasswordNegativeTest() {
+
+        CourierCreateModel courierCreate = CourierData.NEGATIVE_CREATE_LIST.get(1);
+        Response response = api.createCourier(courierCreate);
+        checkCreateNegative(response);
+
+    }
+
+    // public void newCourierCreateNegativeTest() {
+        
+    //     Gson gson = new Gson();
+    //     for (CourierCreateModel courier : CourierData.NEGATIVE_CREATE_LIST) {
+
+    //         Response respons = api.createCourier(courier);
+            
+    //         // Чтобы очистить всех пользователей добавляем его в список на удаления
+    //         if (respons.statusCode() == 201) {
+    //             api.getCourierId(courier);
+    //             deleteCourierList.add(courier);
+    //         }
+    //         try {
+    //             checkCreateNegative(respons);
+    //         } catch (AssertionError e) {
+    //             System.err.println(gson.toJson(courier));
+    //             errorCollector.addError(e);
+    //             courierDataAssert(courier, " создан с не валидными данными");
+    //         }
+    //     }
+    // }
 
     
 
